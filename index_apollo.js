@@ -11,24 +11,23 @@ const port = process.env.PORT || 3000;
 
 (async function () {
     const app = express();
-    app.use(cors())
     const httpServer = http.createServer(app);
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        // playground:true,
-        // context: ({req}) =>{
-        //     try{
-        //         console.log('--------HEADER START--------')
-        //         console.log(req.headers)
-        //         console.log('---------HEADER END---------')
-        //         console.log('---------BODY START---------')
-        //         console.log(req.body)
-        //         console.log('----------BODY END----------')
-        //     }catch(e){
-        //         throw e
-        //     }
-        // }
+        playground:true,
+        context: ({req}) =>{
+            try{
+                console.log('--------HEADER START--------')
+                console.log(req.headers)
+                console.log('---------HEADER END---------')
+                console.log('---------BODY START---------')
+                console.log(req.body)
+                console.log('----------BODY END----------')
+            }catch(e){
+                throw e
+            }
+        }
     })
     
     await server.start()
