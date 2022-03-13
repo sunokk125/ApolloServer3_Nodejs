@@ -1,0 +1,27 @@
+batchingItem(batch, rows, item) {
+    const obj = {}
+    batch.map(id => (obj[id]=[]))
+    rows.map(row => obj[item(row)].push(row))
+
+    return obj;
+}
+
+const getMenuList = async (
+        conn=null,
+        PARENT_NO
+    ) => {
+        try{
+            let str = ''
+            str = `
+                SELECT * FROM toyerp.menu WHERE PARENT_NO in (${PARENT_NO.map(key)=>`'${key}'`})
+            `
+            let result await exeTran(null, str);
+            const batchingData = batchingItem(PARENT_NO, result, item => item['PARENT_NO']);
+            
+            return PARENT_NO.map(id => batchingData[id])
+            
+        }catch(error){
+            console.log(error)
+            throw error;
+        }
+    }

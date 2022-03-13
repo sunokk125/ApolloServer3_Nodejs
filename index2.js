@@ -17,12 +17,12 @@ const server = new ApolloServer({
     playground:true,
     context: ({req}) =>{
         try{
-            console.log('--------HEADER START--------')
-            console.log(req.headers)
-            console.log('---------HEADER END---------')
-            console.log('---------BODY START---------')
-            console.log(req.body)
-            console.log('----------BODY END----------')
+            // console.log('--------HEADER START--------')
+            // console.log(req.headers)
+            // console.log('---------HEADER END---------')
+            // console.log('---------BODY START---------')
+            // console.log(req.body)
+            // console.log('----------BODY END----------')
         }catch(e){
             throw e
         }
@@ -40,6 +40,7 @@ server.applyMiddleware({
 //         sucess: true,
 //     });
 // });
+
 httpServer.listen(port, () => {
     console.log(`Server is listening at Port : ${port}`)
 })

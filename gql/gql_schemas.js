@@ -2,63 +2,35 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
 type Query {
-    getEmployeeById(
-        employeeId: ID!
-    ): Employee
+    getUsersByNo(
+        NO:String
+    ): [Users]
 
-    getPostById(
-        postId: ID!
-    ): [Post]
-
-    getPostsByComIdAndCategory(
-        companyId: String!
-        category: String!
-    ): [Post]
-
-    logInEmployee(
-        email: String!
-        password: String!
-    ): Message
+    getPosts:[Posts]
+}
+type Users{
+    _no: Int
+    _id: String
+    _pw: String
+    _email: String
 }
 
-type Company {
-    companyId: ID!
-    name: String!
-    address: String!
-    phoneNumber: String!
-    email: String!
-    createdAt: String!
-    updatedAt: String
+type Posts {
+    _id: Int
+    user_id: Users
+    contents: String
+    comments:[Comments]
 }
 
-type Employee {
-    employeeId: ID!
-    companyId: Company!
-    name: String!
-    email: String!
-    password: String!
-    phoneNumber: String!
-    position: String!
-    joinAt: String!
-    createdAt: String!
-    updatedAt: String
-}
-
-type Post {
-    postId: ID!
-    companyId: Company!
-    employeeId: Employee!
-    title: String
-    content: String!
-    createdAt: String!
-    updatedAt: String
-    category: Int!
-    refPostId: Post
+type Comments{
+    _id:Int
+    post_id:Int
+    contents:String
 }
 
 type Message {
     token: String
-    employee: Employee
+    user: Users
 }
 
 type CompanyUpdateResult{
@@ -74,46 +46,6 @@ type PostUpdateResult{
 }
 
 type Mutation {
-    createEmployee(
-        name: String!
-        email: String!
-        companyId: Int!
-        password: String
-        phoneNumber: String
-        position: String
-        joinAt: String
-    ): PostUpdateResult
-
-    updateEmployeeInfo(
-        employeeId: ID!
-        companyId: Int
-        name: String
-        email: String
-        password: String
-        phoneNumber: String
-        position: String
-        joinAt: String
-    ): Int
-
-    deleteEmployee(
-        employeeId: ID!
-    ): Int
-
-    createPost(
-        title: String
-        content: String!
-        companyId: Int!
-        employeeId: Int!
-        category: Int!
-        refPostId: Int
-    ): Int
-
-    updatePost(
-        postId: ID!
-        title: String
-        content: String
-    ): Int
-
     deletePost(
         postId: ID!
     ): Int
